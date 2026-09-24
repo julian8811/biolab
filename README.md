@@ -2,40 +2,38 @@
 
 Miniweb educativa para estudiantes de grados 10.º y 11.º orientada al aprendizaje experimental de ciencia de alimentos.
 
-## Versión estable
+## Versión actual
 
-**v1.0 — piloto funcional conectado**
-
-Funciones principales:
+**v0.9 — piloto multiusuario pulido**
 
 - Ruta Láctea y Ruta Fermentación.
 - Pretest y postest.
-- Misión guiada: Descubre → Formula → Transforma → Mide → Resuelve → Presenta.
+- Misión guiada en seis etapas.
 - Registro de pH, temperatura, °Brix y observaciones.
-- Validación básica de mediciones y tendencias de pH/°Brix.
-- Interpretación científica orientativa.
-- Corrección y eliminación de datos experimentales.
-- Descarga CSV de evidencia del equipo.
-- Reto científico, pitch y resumen final.
-- XP, badges y progreso persistente.
-- Navegación móvil y PWA.
-- Enlaces/QR de sesión.
-- Validación de sesión antes de iniciar.
-- Manejo correcto de sesiones recibidas mediante `?session=`.
-- Sincronización multi-equipo con Supabase.
-- Panel docente con métricas y exportación CSV.
-- Creación, activación y administración de sesiones.
-- Cambio de PIN docente.
-- Protección contra intentos repetidos.
+- Reto científico y pitch final.
+- Progreso, XP y badges.
+- Sincronización con Supabase.
+- Panel docente multi-equipo y exportación CSV.
+- Gestión de sesiones, activación/desactivación y cambio de PIN.
+- Protección contra intentos repetidos en el acceso docente.
+- QR de sesión generado dentro de la infraestructura BioLab.
+- Navegación móvil y soporte para áreas seguras.
+- Confirmaciones y validaciones integradas en la interfaz.
+- PWA con soporte offline.
+- Iconografía SVG profesional, sin emojis en la interfaz.
 
-## Privacidad y seguridad
+## Validación
+
+La prueba multiusuario v0.9 creó dos equipos en una sesión temporal, consolidó ambos en el panel docente, verificó el cierre de una sesión inactiva y eliminó todos los datos QA al finalizar.
+
+## Seguridad del piloto
+
+Las claves administrativas y PIN docentes no se guardan en el repositorio. Supabase conserva únicamente hashes.
 
 La miniweb evita recopilar nombres individuales, correos electrónicos o documentos de identidad de estudiantes.
 
-Los secretos docentes y administrativos se almacenan como hashes en Supabase y no se guardan en GitHub.
-
 ## Producción
 
-https://biolab-xi.vercel.app/
+Sitio: https://biolab-xi.vercel.app/
 
-El branch `main` despliega automáticamente a Vercel.
+Cada push a `main` activa un deployment automático en Vercel.
