@@ -1,0 +1,13 @@
+{
+  "name": "BioLab Escolar",
+  "short_name": "BioLab",
+  "description": "Laboratorio interactivo escolar de ciencia de alimentos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0aa99b",
+  "lang": "es",
+  "icons": [
+    {"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
