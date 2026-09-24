@@ -4,9 +4,11 @@ Miniweb educativa para estudiantes de grados 10.º y 11.º orientada al aprendiz
 
 ## Versión actual
 
-**v0.9 — piloto multiusuario pulido**
+**v1.0 — imágenes HD y demostraciones interactivas**
 
 - Ruta Láctea y Ruta Fermentación.
+- Demostraciones interactivas paso a paso para pH, elaboración de queso, fermentación y análisis de resultados.
+- Imágenes WebP HD servidas como recursos estáticos desde Vercel.
 - Pretest y postest.
 - Misión guiada en seis etapas.
 - Registro de pH, temperatura, °Brix y observaciones.
