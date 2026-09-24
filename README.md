@@ -1,20 +1,21 @@
 # BioLab Escolar
 
-Miniweb educativa para estudiantes de grados 10.º y 11.º orientada a aprendizaje experimental sobre productos lácteos y fermentación de uvas.
+Miniweb educativa para grados 10.º y 11.º sobre ciencia de alimentos, transformación láctea y fermentación.
 
-## Estado
+## Arquitectura
 
-- Frontend estático responsive y PWA.
+- Frontend estático autocontenido y responsive.
+- PWA con `manifest.webmanifest` y `service-worker.js`.
 - Iconografía SVG profesional.
-- Imágenes WebP optimizadas.
-- Integración con Supabase para sesiones, equipos, progreso y panel docente.
-- Preparado para despliegue en Vercel.
+- Imágenes integradas en el HTML para un despliegue portátil.
+- Backend Supabase para sesión de aula, equipos, progreso y panel docente.
 
 ## Piloto
 
-- Código de sesión: `BIO-001`
-- El PIN docente debe cambiarse antes de un piloto abierto.
+- Sesión inicial: `BIO-001`.
+- La clave de Supabase incluida es una **publishable key** para cliente; no es una service-role key.
+- Cambiar el PIN docente antes de un piloto abierto.
 
-## Despliegue
+## Vercel
 
-Vercel puede servir este repositorio como proyecto estático sin comando de build. `vercel.json` ya contiene la configuración necesaria.
+El proyecto no necesita comando de build. Vercel puede publicar la rama `main` como sitio estático.
