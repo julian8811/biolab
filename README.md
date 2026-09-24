@@ -4,33 +4,38 @@ Miniweb educativa para estudiantes de grados 10.º y 11.º orientada al aprendiz
 
 ## Versión actual
 
-**v0.8 — piloto funcional administrable**
+**v0.9 — piloto funcional validado**
+
+Incluye:
 
 - Ruta Láctea y Ruta Fermentación.
 - Pretest y postest.
 - Misión guiada en seis etapas.
 - Registro de pH, temperatura, °Brix y observaciones.
+- Validación básica de rangos de medición.
+- Tendencias visuales de pH y °Brix.
+- Interpretación científica orientativa de la evidencia.
+- Corrección/eliminación de mediciones.
+- Descarga CSV de evidencia del equipo.
 - Reto científico y pitch final.
-- Progreso, XP y badges.
-- Sincronización con Supabase.
-- Panel docente multi-equipo.
-- Exportación CSV.
-- Enlace y QR de acceso a cada sesión.
-- Gestión de sesiones desde la miniweb.
-- Activación/desactivación de sesiones.
+- Resumen final con aprendizaje, métricas, interpretación y badges.
+- Progreso, XP y navegación móvil.
+- Sincronización Supabase multi-equipo.
+- Panel docente con métricas y exportación CSV.
+- Creación, activación y administración de sesiones.
 - Cambio de PIN docente.
-- Protección contra intentos repetidos en el panel docente.
-- Navegación móvil y PWA con soporte offline.
-- Iconografía SVG profesional, sin emojis en la interfaz.
+- Protección contra intentos repetidos.
+- PWA con funcionamiento offline básico.
+- Iconografía SVG profesional.
 
-## Seguridad del piloto
+## Seguridad
 
-Las claves administrativas y PIN docentes no se guardan en el repositorio. Supabase conserva únicamente hashes.
+Las credenciales docentes y administrativas se almacenan como hashes en Supabase. No se guardan en GitHub.
 
 La miniweb evita recopilar nombres individuales, correos electrónicos o documentos de identidad de estudiantes.
 
 ## Producción
 
-Sitio: https://biolab-xi.vercel.app/
+https://biolab-xi.vercel.app/
 
-Cada push a `main` activa un deployment automático en Vercel.
+El branch `main` despliega automáticamente a Vercel.
