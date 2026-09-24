@@ -4,7 +4,7 @@ Miniweb educativa para estudiantes de grados 10.º y 11.º orientada al aprendiz
 
 ## Versión actual
 
-**v0.7 — piloto funcional conectado**
+**v0.8 — piloto funcional administrable**
 
 - Ruta Láctea y Ruta Fermentación.
 - Pretest y postest.
@@ -15,19 +15,22 @@ Miniweb educativa para estudiantes de grados 10.º y 11.º orientada al aprendiz
 - Sincronización con Supabase.
 - Panel docente multi-equipo.
 - Exportación CSV.
-- Enlace y QR de acceso a la sesión.
-- Navegación móvil real.
-- PWA con soporte offline.
+- Enlace y QR de acceso a cada sesión.
+- Gestión de sesiones desde la miniweb.
+- Activación/desactivación de sesiones.
+- Cambio de PIN docente.
+- Protección contra intentos repetidos en el panel docente.
+- Navegación móvil y PWA con soporte offline.
 - Iconografía SVG profesional, sin emojis en la interfaz.
 
-## Piloto
+## Seguridad del piloto
 
-Sesión inicial: `BIO-001`.
+Las claves administrativas y PIN docentes no se guardan en el repositorio. Supabase conserva únicamente hashes.
 
-No se recopilan nombres individuales, correos electrónicos ni documentos de identidad de estudiantes.
+La miniweb evita recopilar nombres individuales, correos electrónicos o documentos de identidad de estudiantes.
 
 ## Producción
 
 Sitio: https://biolab-xi.vercel.app/
 
-Cada push a `main` activa un nuevo deployment en Vercel.
+Cada push a `main` activa un deployment automático en Vercel.
