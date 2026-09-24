@@ -1,4 +1,4 @@
-const CACHE='biolab-v10-github-1';
+const CACHE='biolab-v09-github-1';
 const ASSETS=['/','/index.html','/favicon.svg','/manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
