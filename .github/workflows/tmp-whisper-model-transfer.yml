@@ -6,24 +6,22 @@ on:
       - tmp-whisper-model-transfer-20261003
 
 jobs:
-  package-model:
+  package-models:
     runs-on: ubuntu-latest
     steps:
-      - name: Download model parts
+      - name: Download smaller multilingual Whisper models
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p model
-          cd model
-          for s in aa ab ac ad ae af ag ah ai aj; do
-            curl -fL --retry 5 --retry-delay 2               -o "ggml-small-q5_1.bin.part-$s"               "https://raw.githubusercontent.com/advexplorer/whisper/main/ggml-small-q5_1.bin.part-$s"
-          done
-          cat ggml-small-q5_1.bin.part-* > ggml-small-q5_1.bin
-          echo "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb  ggml-small-q5_1.bin" | sha256sum -c -
-      - name: Upload reconstructed model
+          mkdir -p models
+          curl -fL --retry 5 --retry-delay 2             -o models/ggml-base-q5_1.bin             "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base-q5_1.bin"
+          curl -fL --retry 5 --retry-delay 2             -o models/ggml-tiny-q5_1.bin             "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny-q5_1.bin"
+          ls -lh models
+          sha256sum models/*
+      - name: Upload models
         uses: actions/upload-artifact@v4
         with:
-          name: whisper-small-q5_1
-          path: model/ggml-small-q5_1.bin
+          name: whisper-fast-models
+          path: models/
           compression-level: 0
           retention-days: 1
