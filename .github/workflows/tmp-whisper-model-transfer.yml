@@ -1,4 +1,4 @@
-name: temporary-whisper-model-transfer
+name: temporary-faster-whisper-transfer
 
 on:
   push:
@@ -6,22 +6,42 @@ on:
       - tmp-whisper-model-transfer-20261003
 
 jobs:
-  package-models:
+  package-runtime:
     runs-on: ubuntu-latest
     steps:
-      - name: Download smaller multilingual Whisper models
-        shell: bash
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Download Python wheels
         run: |
-          set -euo pipefail
-          mkdir -p models
-          curl -fL --retry 5 --retry-delay 2             -o models/ggml-base-q5_1.bin             "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base-q5_1.bin"
-          curl -fL --retry 5 --retry-delay 2             -o models/ggml-tiny-q5_1.bin             "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny-q5_1.bin"
-          ls -lh models
-          sha256sum models/*
-      - name: Upload models
+          python -m pip install --upgrade pip
+          mkdir -p wheelhouse
+          python -m pip download -d wheelhouse "faster-whisper>=1.1.0,<2" "av<19"
+          ls -lh wheelhouse
+      - name: Download multilingual small model
+        run: |
+          python -m pip install huggingface_hub
+          python - <<'PY'
+          from huggingface_hub import snapshot_download
+          snapshot_download(
+              repo_id="Systran/faster-whisper-small",
+              local_dir="faster-whisper-small",
+              local_dir_use_symlinks=False,
+          )
+          PY
+          du -sh faster-whisper-small
+          find faster-whisper-small -maxdepth 2 -type f -printf '%p %s\n' | sort
+      - name: Upload runtime wheels
         uses: actions/upload-artifact@v4
         with:
-          name: whisper-fast-models
-          path: models/
+          name: faster-whisper-py313-wheels
+          path: wheelhouse/
+          compression-level: 0
+          retention-days: 1
+      - name: Upload small model
+        uses: actions/upload-artifact@v4
+        with:
+          name: faster-whisper-small-model
+          path: faster-whisper-small/
           compression-level: 0
           retention-days: 1
