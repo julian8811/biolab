@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioLab — Guía Pedagógica y Rúbrica de Evaluación Formativa (Grados 10 y 11)</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --bg-soft: #f8fafc;
+      --navy: #0f172a;
+      --green: #059669;
+      --amber: #d97706;
+      --purple: #7c3aed;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-main);
+      background: #f1f5f9;
+      line-height: 1.5;
+      font-size: 13px;
+      padding: 24px;
+    }
+
+    .no-print-bar {
+      max-width: 900px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--navy);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .document-page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    header.doc-header {
+      border-bottom: 2px solid var(--navy);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .doc-brand h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .doc-brand p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .doc-meta-badge {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .doc-meta-badge strong {
+      display: block;
+      color: var(--navy);
+      font-size: 12px;
+    }
+
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 12px;
+    }
+
+    .meta-table td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      background: var(--bg-soft);
+    }
+
+    .meta-table td strong {
+      color: var(--navy);
+    }
+
+    .meta-table td.field-line {
+      background: #ffffff;
+      color: #64748b;
+    }
+
+    h2.section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy);
+      text-transform: uppercase;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin: 24px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3.sub-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 14px 0 6px;
+    }
+
+    p.text {
+      margin-bottom: 10px;
+      text-align: justify;
+      color: #334155;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .callout {
+      background: var(--bg-soft);
+      border-left: 4px solid var(--primary);
+      padding: 12px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .callout.amber {
+      border-left-color: var(--amber);
+      background: #fffbeb;
+    }
+
+    .callout.green {
+      border-left-color: var(--green);
+      background: #ecfdf5;
+    }
+
+    /* Tabla de Rúbrica */
+    table.rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 11.5px;
+    }
+
+    table.rubric-table th, table.rubric-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+
+    table.rubric-table th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    table.rubric-table td.dim {
+      font-weight: 700;
+      background: var(--bg-soft);
+      color: var(--navy);
+      width: 18%;
+    }
+
+    .badge-score {
+      display: inline-block;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+    .badge-sup { background: #dcfce7; color: #166534; }
+    .badge-alt { background: #e0f2fe; color: #075985; }
+    .badge-bas { background: #fef3c7; color: #92400e; }
+    .badge-baj { background: #fee2e2; color: #991b1b; }
+
+    /* Ficha de Registro de Campo */
+    table.data-sheet {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 11px;
+    }
+
+    table.data-sheet th, table.data-sheet td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: center;
+    }
+
+    table.data-sheet th {
+      background: #334155;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    table.data-sheet tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .signature-box {
+      text-align: center;
+    }
+
+    .signature-line {
+      border-top: 1px solid var(--navy);
+      margin-top: 40px;
+      padding-top: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .signature-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .page-break {
+      page-break-before: always;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px dashed #e2e8f0;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        font-size: 11px;
+      }
+
+      .no-print-bar {
+        display: none !important;
+      }
+
+      .document-page {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .page-break {
+        page-break-before: always;
+        border: none;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      h2.section-title {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      table.rubric-table th {
+        background: #1e293b !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      table.data-sheet th {
+        background: #334155 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de control en pantalla (Oculta al imprimir) -->
+  <div class="no-print-bar">
+    <div>
+      <strong style="color:var(--navy);font-size:15px">BioLab — Documento Oficial de Evaluación Escolar</strong>
+      <p style="font-size:12px;color:var(--text-muted)">Compatible con impresión en carta/A4 y exportación a PDF.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <a href="index.html" class="btn-action btn-secondary">← Volver a BioLab</a>
+      <button onclick="window.print()" class="btn-action">🖨️ Imprimir / Guardar PDF</button>
+    </div>
+  </div>
+
+  <div class="document-page">
+
+    <!-- Encabezado Institucional -->
+    <header class="doc-header">
+      <div class="doc-brand">
+        <h1>Guía Pedagógica y Rúbrica de Evaluación Formativa</h1>
+        <p>Procesos Bioquímicos y Cinética de Fermentaciones — Educación Media (Grados 10.º y 11.º)</p>
+      </div>
+      <div class="doc-meta-badge">
+        <strong>BIOLAB SUITE ESCOLAR</strong>
+        <span>Modalidad B-Learning (Simulador + Mesón)</span>
+      </div>
+    </header>
+
+    <!-- Ficha de Identificación -->
+    <table class="meta-table">
+      <tr>
+        <td style="width:18%"><strong>Institución Educativa:</strong></td>
+        <td class="field-line" colspan="3">____________________________________________________________________</td>
+      </tr>
+      <tr>
+        <td><strong>Docente Titular:</strong></td>
+        <td class="field-line" style="width:32%">___________________________________</td>
+        <td style="width:16%"><strong>Asignatura:</strong></td>
+        <td class="field-line" style="width:34%">Biología / Química / Biotecnología</td>
+      </tr>
+      <tr>
+        <td><strong>Equipo / Mesa N.º:</strong></td>
+        <td class="field-line">___________________________________</td>
+        <td><strong>Grado / Grupo:</strong></td>
+        <td class="field-line">10.° [ &nbsp; ] &nbsp; 11.° [ &nbsp; ] &nbsp; Grupo: ______</td>
+      </tr>
+      <tr>
+        <td><strong>Integrantes:</strong></td>
+        <td class="field-line" colspan="3">1. ______________________________ 2. ______________________________ 3. ______________________________</td>
+      </tr>
+    </table>
+
+    <!-- 1. Fundamentación y Objetivos de Aprendizaje -->
+    <h2 class="section-title">1. Propósito Científico y Derechos Básicos de Aprendizaje (DBA)</h2>
+    <p class="text">
+      Esta práctica articula el modelado matemático en los <strong>Simuladores Cinéticos Autónomos de BioLab</strong> con el análisis empírico en el <strong>Mesón Demostrativo</strong>. Permite al estudiante comprender la fermentación como un mecanismo adaptativo anaeróbico de regeneración de coenzimas ($NAD^+$ a partir de glicólisis), cuantificar la conversión de sustrato carbonado en metabolitos de interés y predecir anomalías cinéticas por variación fisicoquímica.
+    </p>
+
+    <div class="grid-2">
+      <div class="callout green">
+        <strong>Ruta 1: Fermentación Alcohólica (Levaduras)</strong>
+        <p style="margin-top:4px">
+          Modelado de <em>Saccharomyces cerevisiae</em>. Análisis de la ecuación estequiométrica:
+          <br><code>C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂ + 2 ATP</code>.
+          <br>Variables clave: Caída de °Brix, flujo de desprendimiento de gas ($CO_2$), desnaturalización térmica (&gt;45 °C) y transición aerobia/anaerobia (Efecto Pasteur).
+        </p>
+      </div>
+      <div class="callout amber">
+        <strong>Ruta 2: Fermentación Láctea y Enzimática (Quesería)</strong>
+        <p style="margin-top:4px">
+          Acidificación bacteriana homoláctica (<em>Lactobacillus / Streptococcus</em>) frente a cuajado enzimático por quimosina:
+          <br><code>Glucosa / Lactosa → 2 Ácido Láctico</code>.
+          <br>Variables clave: Caída de pH hasta punto isoeléctrico de la caseína ($pI \approx 4.6$), dependencia de iones $Ca^{2+}$ y firmeza de coágulo.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. Articulación Didáctica del Mesón Demostrativo -->
+    <h2 class="section-title">2. Protocolo de Enlace Didáctico: Mesón Demostrativo vs. Simulador</h2>
+    <p class="text">
+      El mesón físico no busca que 35 estudiantes manipulen reactivos peligrosos simultáneamente; opera como <strong>punto de anclaje empírico y demostrativo</strong> para contrastar las curvas predictivas de la plataforma interactiva:
+    </p>
+
+    <table class="rubric-table" style="font-size:11px">
+      <thead>
+        <tr>
+          <th style="width:20%">Fase Didáctica</th>
+          <th style="width:40%">Actividad en el Mesón Físico (Demostración Docente)</th>
+          <th style="width:40%">Actividad en el Simulador BioLab (Estudiantes en Equipo)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Hipótesis Inicial</strong></td>
+          <td>Muestra física de materias primas (jugo/mosto a T0 y leche fresca a 37 °C). El docente formula la pregunta socrática de choque.</td>
+          <td>Calibración del simulador en <em>Transforma</em>: fijar temperatura y sustrato. Generación de la curva predictiva inicial.</td>
+        </tr>
+        <tr>
+          <td><strong>2. Perturbación Crítica</strong></td>
+          <td>Toma de alícuotas con cambios perceptibles (desprendimiento de burbujas en trampa de gas, olor a ésteres, aumento de viscosidad).</td>
+          <td>Introducción de perturbaciones en tiempo real: subir temperatura a 50 °C o variar tasa de aireación y observar la cinética.</td>
+        </tr>
+        <tr>
+          <td><strong>3. Toma de Datos</strong></td>
+          <td>Lectura compartida en instrumentos escolares: refractómetro analógico (°Brix) y pH-metro calibrado.</td>
+          <td>Registro en el módulo <em>Mide</em>: tabulación de valores y cálculo automático de pendientes de acidificación/consumo.</td>
+        </tr>
+        <tr>
+          <td><strong>4. Reto Analítico</strong></td>
+          <td>Presentación de una muestra con falla real de proceso (ej: fermentación estancada por choque térmico o cuajado deficiente).</td>
+          <td>Módulo <em>Resuelve</em>: diagnóstico causal con justificación bioquímica sin recurrir al descarte a ciegas.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 3. Rúbrica Analítica de Evaluación Formativa -->
+    <header class="doc-header" style="margin-top:10px">
+      <div class="doc-brand">
+        <h1>Matriz de Rúbrica Analítica de Desempeño</h1>
+        <p>Criterios de evaluación para Grados 10.° y 11.° (Escala Institucional 1.0 a 5.0)</p>
+      </div>
+    </header>
+
+    <table class="rubric-table">
+      <thead>
+        <tr>
+          <th>Criterio Evaluado</th>
+          <th style="width:20%">Superior (4.6 – 5.0)</th>
+          <th style="width:20%">Alto (4.0 – 4.5)</th>
+          <th style="width:20%">Básico (3.0 – 3.9)</th>
+          <th style="width:20%">Bajo (1.0 – 2.9)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">
+            <strong>1. Modelado Cinético en Simuladores</strong>
+            <br><small style="color:var(--text-muted)">Uso autónomo de variables: T°, sustrato, tiempo.</small>
+          </td>
+          <td>
+            <span class="badge-score badge-sup">SUPERIOR</span><br>
+            Manipula y predice con exactitud cómo cada variable altera la velocidad de reacción. Anticipa fases de latencia, exponencial y meseta.
+          </td>
+          <td>
+            <span class="badge-score badge-alt">ALTO</span><br>
+            Ajusta parámetros y describe correctamente la tendencia general de la curva sin predecir la fase de agotamiento con total precisión.
+          </td>
+          <td>
+            <span class="badge-score badge-bas">BÁSICO</span><br>
+            Opera los controles del simulador pero requiere asistencia para interpretar el significado cinético de las curvas resultantes.
+          </td>
+          <td>
+            <span class="badge-score badge-baj">BAJO</span><br>
+            Modifica valores al azar sin comprender la relación entre variable independiente y respuesta biológica del microorganismo.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim">
+            <strong>2. Correlación Virtual - Mesón Físico</strong>
+            <br><small style="color:var(--text-muted)">Contraste de °Brix, pH y desprendimiento gaseoso.</small>
+          </td>
+          <td>
+            <span class="badge-score badge-sup">SUPERIOR</span><br>
+            Registra y contrasta rigurosamente datos experimentales del mesón frente a la simulación. Justifica discrepancias empíricas con criterio analítico.
+          </td>
+          <td>
+            <span class="badge-score badge-alt">ALTO</span><br>
+            Registra las mediciones con unidades correctas y reconoce concordancias básicas entre la teoría simulada y la muestra física.
+          </td>
+          <td>
+            <span class="badge-score badge-bas">BÁSICO</span><br>
+            Anota datos de forma incompleta o confunde magnitudes (ej. confunde pH ácido con acidez titulable o % de azúcar).
+          </td>
+          <td>
+            <span class="badge-score badge-baj">BAJO</span><br>
+            No registra evidencias o inventa valores sin correlación con las observaciones del laboratorio escolar.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim">
+            <strong>3. Resolución de Retos y Fallas de Proceso</strong>
+            <br><small style="color:var(--text-muted)">Desnaturalización térmica, Efecto Pasteur, punto isoeléctrico.</small>
+          </td>
+          <td>
+            <span class="badge-score badge-sup">SUPERIOR</span><br>
+            Explica la causa raíz del fallo con mecanismos moleculares (ej. ruptura de enlaces terciarios a 49 °C; neutralización de cargas en $pI=4.6$).
+          </td>
+          <td>
+            <span class="badge-score badge-alt">ALTO</span><br>
+            Identifica la causa correcta del problema y propone una acción correctiva lógica, aunque con fundamentación bioquímica parcial.
+          </td>
+          <td>
+            <span class="badge-score badge-bas">BÁSICO</span><br>
+            Reconoce que hubo una falla pero atribuye el error a factores secundarios no determinantes (ej. "el aire estaba sucio").
+          </td>
+          <td>
+            <span class="badge-score badge-baj">BAJO</span><br>
+            No logra identificar el origen del fallo; responde por ensayo y error sin justificación conceptual.
+          </td>
+        </tr>
+
+        <tr>
+          <td class="dim">
+            <strong>4. Pitch y Comunicación Científica</strong>
+            <br><small style="color:var(--text-muted)">Síntesis del equipo (60–90 seg) con evidencia cuantitativa.</small>
+          </td>
+          <td>
+            <span class="badge-score badge-sup">SUPERIOR</span><br>
+            Estructura un discurso convincente usando datos cuantitativos (°Brix, $\Delta pH$, rendimiento), terminología técnica precisa y propuesta de valor clara.
+          </td>
+          <td>
+            <span class="badge-score badge-alt">ALTO</span><br>
+            Comunica los hallazgos de forma clara y apoya sus conclusiones en algunas cifras del experimento con buen vocabulario.
+          </td>
+          <td>
+            <span class="badge-score badge-bas">BÁSICO</span><br>
+            Presenta una descripción cualitativa del producto sin respaldar afirmaciones con los datos medidos en el simulador.
+          </td>
+          <td>
+            <span class="badge-score badge-baj">BAJO</span><br>
+            Exposición desorganizada, lectura textual o incapacidad de responder preguntas sobre las variables del proceso.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 4. Ficha de Registro de Campo y Toma de Datos para el Estudiante -->
+    <header class="doc-header" style="margin-top:10px">
+      <div class="doc-brand">
+        <h1>Hoja de Campo y Evidencias de Laboratorio</h1>
+        <p>Registro de toma de datos y contraste cinético (Completar durante la sesión)</p>
+      </div>
+      <div class="doc-meta-badge">
+        <strong>HOJA DE TRABAJO</strong>
+        <span>Entregable por Equipo</span>
+      </div>
+    </header>
+
+    <h3 class="sub-title">A. Tabla de Mediciones Cinéticas (Virtual vs. Mesón Físico)</h3>
+    <table class="data-sheet">
+      <thead>
+        <tr>
+          <th>Muestra / Tiempo</th>
+          <th>Temp. (°C)</th>
+          <th>pH Medido</th>
+          <th>°Brix / Sustrato</th>
+          <th>Actividad / Burbujeo</th>
+          <th>Aspecto Físico / Separación de Fases</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>T0 (Inicial / 0 h)</strong></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><strong>T1 (Fase Activa / 24 h)</strong></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><strong>T2 (Pico Cinético / 48 h)</strong></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><strong>T3 (Meseta / 72 h)</strong></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">B. Análisis de Discrepancias y Preguntas Guía</h3>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0 20px">
+      <div style="border:1px solid var(--border);padding:10px;border-radius:6px">
+        <strong>1. ¿Por qué la curva de producción de CO₂ o ácido disminuye su pendiente después de cierto tiempo?</strong>
+        <p style="color:#94a3b8;margin-top:20px;font-size:11px">_________________________________________________________________________________________________________________________</p>
+      </div>
+      <div style="border:1px solid var(--border);padding:10px;border-radius:6px">
+        <strong>2. Si una muestra de fermentación alcohólica se deja abierta al aire, ¿qué ruta metabólica activa la levadura y qué ocurre con la producción de alcohol? (Efecto Pasteur)</strong>
+        <p style="color:#94a3b8;margin-top:20px;font-size:11px">_________________________________________________________________________________________________________________________</p>
+      </div>
+      <div style="border:1px solid var(--border);padding:10px;border-radius:6px">
+        <strong>3. En la ruta láctea, ¿cuál es la diferencia bioquímica entre cortar la leche con ácido (pH 4.6) y coagularla con cuajo (quimosina)?</strong>
+        <p style="color:#94a3b8;margin-top:20px;font-size:11px">_________________________________________________________________________________________________________________________</p>
+      </div>
+    </div>
+
+    <!-- Valoración Final y Firmas -->
+    <h3 class="sub-title">C. Consolidado de Calificación Formativa</h3>
+    <table class="meta-table" style="margin-top:10px">
+      <tr>
+        <td style="width:25%"><strong>Criterio 1 (Simulación):</strong></td>
+        <td style="width:25%;background:#fff" class="field-line">&nbsp; / 5.0</td>
+        <td style="width:25%"><strong>Criterio 2 (Datos Mesón):</strong></td>
+        <td style="width:25%;background:#fff" class="field-line">&nbsp; / 5.0</td>
+      </tr>
+      <tr>
+        <td><strong>Criterio 3 (Reto/Fallas):</strong></td>
+        <td style="background:#fff" class="field-line">&nbsp; / 5.0</td>
+        <td><strong>Criterio 4 (Pitch Científico):</strong></td>
+        <td style="background:#fff" class="field-line">&nbsp; / 5.0</td>
+      </tr>
+      <tr>
+        <td><strong>NOTA DEFINITIVA:</strong></td>
+        <td colspan="3" style="background:#f0fdf4;font-size:13px;font-weight:bold;color:#166534">
+          &nbsp; _______ / 5.0 &nbsp;&nbsp; (Nivel de Desempeño: [ &nbsp; ] Superior &nbsp; [ &nbsp; ] Alto &nbsp; [ &nbsp; ] Básico &nbsp; [ &nbsp; ] Bajo)
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Observaciones del Docente:</strong></td>
+        <td colspan="3" style="background:#fff;height:36px" class="field-line">
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+
+    <div class="signature-grid">
+      <div class="signature-box">
+        <div class="signature-line">Firma Docente Evaluador</div>
+        <div class="signature-sub">Área de Ciencias Naturales</div>
+      </div>
+      <div class="signature-box">
+        <div class="signature-line">Líder del Equipo Estudiantil</div>
+        <div class="signature-sub">Código / Documento</div>
+      </div>
+      <div class="signature-box">
+        <div class="signature-line">Visto Bueno Laboratorio</div>
+        <div class="signature-sub">Bioseguridad y Orden de Mesón</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
