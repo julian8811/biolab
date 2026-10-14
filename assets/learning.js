@@ -81,11 +81,15 @@
     }
     return svgStart + modules[kind].hotspots[selected] + '">' + defs + content + '</svg>';
   }
+  const hotspotImages = {alcohol:[0,1,3],lactic:[1,0,2],cheese:[0,2,3],instruments:[0,1,4]};
+  function topicImage(kind,selected) {
+    return `<img src="assets/subtopic-${kind}-${hotspotImages[kind][selected]}.webp" alt="Ilustración científica generada: ${modules[kind].hotspots[selected]}" width="1200" height="800"><p class="visual-title">${modules[kind].hotspots[selected]}</p>`;
+  }
   function render() {
     const item = modules[current];
     const state = saved[current] ||= {hotspot:0, answer:null};
     panel.setAttribute('aria-labelledby', 'tab-'+current);
-    panel.innerHTML = `<div class="module-top"><figure class="diagram"><div id="diagramArt"><img src="assets/module-${current}.webp" alt="Imagen realista generada: ${item.title}" width="1200" height="800"></div><figcaption>Imagen realista generada con IA · No documenta un experimento</figcaption></figure><div class="module-copy"><p class="eyebrow">${item.eyebrow}</p><h3>${item.title}</h3><p>${item.intro}</p><div class="hotspots" aria-label="Explora la ilustración">${item.hotspots.map((label,i)=>`<button data-hotspot="${i}" aria-pressed="${i===state.hotspot}">${i+1}. ${label}</button>`).join('')}</div><div id="hotspotNote" class="hotspot-note" role="status">${item.notes[state.hotspot]}</div></div></div><div class="activity-grid"><div><p class="step-label">03 / PREDICE</p><h4>${item.question}</h4><div class="answers">${item.answers.map((answer,i)=>`<button data-answer="${i}" aria-pressed="${i===state.answer}">${answer}</button>`).join('')}</div><p id="answerFeedback" class="feedback" role="status">${state.answer===null?'Elige una respuesta. Tu explicación importa más que acertar al primer intento.':feedback(item,state.answer)}</p></div><div class="experiment"><p class="step-label">04 / EXPERIMENTA</p><h4>Cambia una sola variable.</h4><p>${item.task}</p><button class="button primary" data-sim="${current}">Abrir simulador <span aria-hidden="true">↗</span></button><details class="explain"><summary>05 / Explica lo que observaste</summary><p>${item.explain}</p><p><strong>Límite del modelo:</strong> ${item.limit}</p></details></div></div>`;
+    panel.innerHTML = `<div class="module-top"><figure class="diagram"><div id="diagramArt">${topicImage(current,state.hotspot)}</div><figcaption>Imagen realista generada con IA · No documenta un experimento</figcaption></figure><div class="module-copy"><p class="eyebrow">${item.eyebrow}</p><h3>${item.title}</h3><p>${item.intro}</p><div class="hotspots" aria-label="Explora la ilustración">${item.hotspots.map((label,i)=>`<button data-hotspot="${i}" aria-pressed="${i===state.hotspot}">${i+1}. ${label}</button>`).join('')}</div><div id="hotspotNote" class="hotspot-note" role="status">${item.notes[state.hotspot]}</div></div></div><div class="activity-grid"><div><p class="step-label">03 / PREDICE</p><h4>${item.question}</h4><div class="answers">${item.answers.map((answer,i)=>`<button data-answer="${i}" aria-pressed="${i===state.answer}">${answer}</button>`).join('')}</div><p id="answerFeedback" class="feedback" role="status">${state.answer===null?'Elige una respuesta. Tu explicación importa más que acertar al primer intento.':feedback(item,state.answer)}</p></div><div class="experiment"><p class="step-label">04 / EXPERIMENTA</p><h4>Cambia una sola variable.</h4><p>${item.task}</p><button class="button primary" data-sim="${current}">Abrir simulador <span aria-hidden="true">↗</span></button><details class="explain"><summary>05 / Explica lo que observaste</summary><p>${item.explain}</p><p><strong>Límite del modelo:</strong> ${item.limit}</p></details></div></div>`;
   }
   function feedback(item, answer) { return (answer===item.correct?'Bien razonado. ':'Revisa tu idea. ')+item.feedback; }
   panel.addEventListener('click', event => {
@@ -93,7 +97,7 @@
     if (spot) {
       saved[current].hotspot = +spot.dataset.hotspot;
       panel.querySelectorAll('[data-hotspot]').forEach(b=>b.setAttribute('aria-pressed',String(b===spot)));
-      document.getElementById('diagramArt').innerHTML = diagram(current,+spot.dataset.hotspot);
+      document.getElementById('diagramArt').innerHTML = topicImage(current,+spot.dataset.hotspot);
       document.getElementById('hotspotNote').textContent = modules[current].notes[+spot.dataset.hotspot];
     }
     const answer = event.target.closest('[data-answer]');
@@ -165,5 +169,9 @@
     navigation.onclick=e=>{const b=e.target.closest('[data-stage]');if(!b)return;const targets=[panel.querySelector('.module-top'),section,panel.querySelector('.activity-grid'),panel.querySelector('.experiment'),panel.querySelector('.explain')];const target=targets[+b.dataset.stage];if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:'smooth'});};
     section.onclick=e=>{const b=e.target.closest('[data-capsule]');if(b){panel.querySelector(`[data-hotspot="${b.dataset.capsule}"]`).click();panel.querySelector('.module-top').scrollIntoView({block:'start'});}};
   };
+  document.querySelectorAll('[data-module]').forEach(button=>{
+    const image=document.createElement('img');
+    image.src='assets/module-'+button.dataset.module+'.webp';image.alt='';image.width=300;image.height=200;image.loading='lazy';button.prepend(image);
+  });
   render();
 })();
