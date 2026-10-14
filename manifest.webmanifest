@@ -1,11 +1,11 @@
 {
-  "name": "BioLab Escolar",
-  "short_name": "BioLab",
-  "description": "Laboratorio interactivo escolar de ciencia de alimentos.",
+  "name": "BioLab FermentArt · Colmayor",
+  "short_name": "FermentArt",
+  "description": "Experiencias didácticas y simuladores educativos de fermentación.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0aa99b",
+  "theme_color": "#195855",
   "lang": "es",
   "icons": [
     {"src":"/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
