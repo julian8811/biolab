@@ -194,6 +194,35 @@
         else{const [volume,ratio]=values;out.textContent=`Gránulos = ${f(volume)} mL × ${f(ratio)} g / 100 mL = ${f(volume*ratio/100)} g.`;}
       };
       procedure.addEventListener('input',updateCalculation);updateCalculation();
+      const stepDetails=[...procedure.children].filter(e=>e.tagName==='DETAILS').slice(0,6);
+      stepDetails.forEach(e=>e.hidden=true);
+      const explorer=document.createElement('div');explorer.className='process-explorer';
+      const checkpoints=mora?['¿Qué datos registrarás antes de comenzar?','¿Por qué medir °Brix en lugar de asumirlo?','¿La suma de ingredientes coincide con la masa final?','¿Por qué revisar las condiciones antes de añadir el cultivo?','¿Qué variable mantendrás constante al comparar?','¿Qué puede y qué no puede demostrar el aspecto?']:['¿Qué materias primas identifica el protocolo?','¿Qué volumen y proporción elegiste?','¿Por qué una cucharada no sustituye una balanza?','¿Qué registrarás en el momento inicial?','¿Un pH menor significa ausencia de lactosa?','¿Qué controles faltan antes de decidir el destino del lote?'];
+      let active=0;const visited=new Set();
+      explorer.innerHTML=`<div class="process-track" aria-label="Etapas de elaboración">${steps.map(([name],i)=>`<button data-process="${i}" aria-pressed="${i===0}"><span>${i+1}</span>${name}</button>`).join('')}</div><div class="process-stage"></div>`;
+      procedure.querySelector('.calculation').before(explorer);
+      const paintStep=()=>{
+        explorer.querySelectorAll('[data-process]').forEach(b=>{b.setAttribute('aria-pressed',String(+b.dataset.process===active));b.classList.toggle('visited',visited.has(+b.dataset.process));});
+        const imageIndex=(mora?[4,1,1,4,3,3]:[0,0,2,1,3,4])[active];
+        explorer.querySelector('.process-stage').innerHTML=`<figure><img src="assets/subtopic-${current}-${imageIndex}.webp" alt="Ilustración de la etapa: ${steps[active][0]}" width="1200" height="800"><figcaption>Ilustración educativa · Etapa ${active+1} de ${steps.length}</figcaption></figure><div><p class="eyebrow">OBSERVA Y RAZONA / ${active+1} DE ${steps.length}</p><h4>${steps[active][0]}</h4><p>${steps[active][1]}</p><div class="step-check"><strong>Antes de avanzar</strong><p>${checkpoints[active]}</p><button data-review>He revisado esta etapa</button><p class="review-status" role="status">${visited.has(active)?'Etapa revisada. Puedes regresar cuando quieras.':''}</p></div><div class="step-controls"><button data-back ${active===0?'disabled':''}>← Anterior</button><button data-next ${active===steps.length-1?'disabled':''}>Siguiente →</button><span>${visited.size}/${steps.length} etapas revisadas</span></div></div>`;
+      };
+      explorer.onclick=e=>{const jump=e.target.closest('[data-process]');if(jump){active=+jump.dataset.process;paintStep();return;}if(e.target.closest('[data-review]')){visited.add(active);explorer.querySelector('.review-status').textContent='Etapa revisada. Puedes regresar cuando quieras.';explorer.querySelector('.step-controls span').textContent=visited.size+'/'+steps.length+' etapas revisadas';}if(e.target.closest('[data-next]')&&active<steps.length-1){active++;paintStep();}if(e.target.closest('[data-back]')&&active>0){active--;paintStep();}};
+      paintStep();
+      const calculation=procedure.querySelector('.calculation');
+      calculation.classList.add('calculation-redesign');
+      const header=document.createElement('p');header.className='calc-intro';header.textContent='1. Ajusta los datos · 2. Observa el cálculo · 3. Comprueba el resultado';calculation.querySelector('h4').after(header);
+      const resultCards=document.createElement('div');resultCards.className='calc-cards';calculation.querySelector('output').before(resultCards);
+      const renderCards=()=>{
+        const inputs=[...calculation.querySelectorAll('input')];
+        if(inputs.some(e=>e.value===''||!e.checkValidity())){resultCards.replaceChildren();return;}
+        const v=inputs.map(e=>e.valueAsNumber),f=n=>n.toLocaleString('es-CO',{maximumFractionDigits:2});
+        let cards;
+        if(mora){const[mass,pulp,brix,target]=v;const sugar=(mass*target-pulp*brix)/100,water=mass-pulp-sugar;if(sugar<0||water<0){resultCards.replaceChildren();return;}cards=[['Pulpa',pulp,'g'],['Azúcar añadida',sugar,'g'],['Agua',water,'g']];}
+        else cards=[['Leche',v[0],'mL'],['Proporción',v[1],'g/100 mL'],['Gránulos calculados',v[0]*v[1]/100,'g']];
+        resultCards.innerHTML=cards.map(([label,value,unit])=>`<div><small>${label}</small><strong>${f(value)} <span>${unit}</span></strong></div>`).join('');
+      };
+      procedure.addEventListener('input',renderCards);renderCards();
+
     }
 
     navigation.onclick=e=>{const b=e.target.closest('[data-stage]');if(!b)return;const targets=[panel.querySelector('.module-top'),section,panel.querySelector('.activity-grid'),panel.querySelector('.experiment'),panel.querySelector('.explain')];const target=targets[+b.dataset.stage];if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:'smooth'});};
