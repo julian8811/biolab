@@ -53,3 +53,6 @@ Los resultados y las respuestas se conservan solo durante la sesi贸n. Cambiar de
 ## Publicaci贸n
 
 El repositorio mantiene su configuraci贸n existente de Vercel. Esta actualizaci贸n queda en la rama `feat/colmayor-realistic-simulations`; el sitio de producci贸n no se ha desplegado.
+
+## Actualizaci髇 visual
+Veinte ilustraciones generadas, una por c醦sula explicativa. QR tem醫ico con enlace p鷅lico, ampliaci髇 y descarga. Se priorizan im醙enes en lugar de videos. Las ilustraciones moleculares son conceptuales y no micrograf韆s.

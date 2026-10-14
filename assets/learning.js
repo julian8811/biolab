@@ -85,7 +85,7 @@
     const item = modules[current];
     const state = saved[current] ||= {hotspot:0, answer:null};
     panel.setAttribute('aria-labelledby', 'tab-'+current);
-    panel.innerHTML = `<div class="module-top"><figure class="diagram"><div id="diagramArt">${diagram(current,state.hotspot)}</div><figcaption>Ilustración educativa interactiva · Esquema sin escala</figcaption></figure><div class="module-copy"><p class="eyebrow">${item.eyebrow}</p><h3>${item.title}</h3><p>${item.intro}</p><div class="hotspots" aria-label="Explora la ilustración">${item.hotspots.map((label,i)=>`<button data-hotspot="${i}" aria-pressed="${i===state.hotspot}">${i+1}. ${label}</button>`).join('')}</div><div id="hotspotNote" class="hotspot-note" role="status">${item.notes[state.hotspot]}</div></div></div><div class="activity-grid"><div><p class="step-label">02 / PREDICE</p><h4>${item.question}</h4><div class="answers">${item.answers.map((answer,i)=>`<button data-answer="${i}" aria-pressed="${i===state.answer}">${answer}</button>`).join('')}</div><p id="answerFeedback" class="feedback" role="status">${state.answer===null?'Elige una respuesta. Tu explicación importa más que acertar al primer intento.':feedback(item,state.answer)}</p></div><div class="experiment"><p class="step-label">03 / EXPERIMENTA</p><h4>Cambia una sola variable.</h4><p>${item.task}</p><button class="button primary" data-sim="${current}">Abrir simulador <span aria-hidden="true">↗</span></button><details class="explain"><summary>04 / Explica lo que observaste</summary><p>${item.explain}</p><p><strong>Límite del modelo:</strong> ${item.limit}</p></details></div></div>`;
+    panel.innerHTML = `<div class="module-top"><figure class="diagram"><div id="diagramArt"><img src="assets/module-${current}.webp" alt="Imagen realista generada: ${item.title}" width="1200" height="800"></div><figcaption>Imagen realista generada con IA · No documenta un experimento</figcaption></figure><div class="module-copy"><p class="eyebrow">${item.eyebrow}</p><h3>${item.title}</h3><p>${item.intro}</p><div class="hotspots" aria-label="Explora la ilustración">${item.hotspots.map((label,i)=>`<button data-hotspot="${i}" aria-pressed="${i===state.hotspot}">${i+1}. ${label}</button>`).join('')}</div><div id="hotspotNote" class="hotspot-note" role="status">${item.notes[state.hotspot]}</div></div></div><div class="activity-grid"><div><p class="step-label">02 / PREDICE</p><h4>${item.question}</h4><div class="answers">${item.answers.map((answer,i)=>`<button data-answer="${i}" aria-pressed="${i===state.answer}">${answer}</button>`).join('')}</div><p id="answerFeedback" class="feedback" role="status">${state.answer===null?'Elige una respuesta. Tu explicación importa más que acertar al primer intento.':feedback(item,state.answer)}</p></div><div class="experiment"><p class="step-label">03 / EXPERIMENTA</p><h4>Cambia una sola variable.</h4><p>${item.task}</p><button class="button primary" data-sim="${current}">Abrir simulador <span aria-hidden="true">↗</span></button><details class="explain"><summary>04 / Explica lo que observaste</summary><p>${item.explain}</p><p><strong>Límite del modelo:</strong> ${item.limit}</p></details></div></div>`;
   }
   function feedback(item, answer) { return (answer===item.correct?'Bien razonado. ':'Revisa tu idea. ')+item.feedback; }
   panel.addEventListener('click', event => {
@@ -125,5 +125,45 @@
   menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);});
   nav.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});
+  const theory = {
+    alcohol: [
+      ['Una célula que transforma', 'La membrana regula intercambios; el citoplasma contiene enzimas. La gemación produce una célula hija. Tamaño y forma dibujados son esquemáticos.'],
+      ['Azúcares y sólidos solubles', 'Glucosa y fructosa son sustratos de la fruta. Otros sólidos también contribuyen a la refracción: °Brix no identifica cada molécula.'],
+      ['Energía y reciclaje molecular', 'La glucólisis transforma glucosa en piruvato y obtiene ATP. La fermentación regenera NAD⁺ a partir de NADH, permitiendo que continúe la glucólisis.'],
+      ['Productos y balance', 'El piruvato puede dar lugar a etanol y CO₂. Parte del sustrato también contribuye a biomasa y otros productos. Compara consumo y formación, no solo burbujas.'],
+      ['Velocidad y límites', 'Temperatura, disponibilidad de sustrato y acumulación de etanol influyen en la actividad. Una curva que se aplana puede indicar limitación; no demuestra muerte celular.']],
+    lactic: [
+      ['Un gránulo es una comunidad', 'Bacterias y levaduras viven asociadas a una matriz. Su composición depende del origen y las condiciones del cultivo.'],
+      ['Funciones diferentes', 'Bacterias lácticas contribuyen a la acidificación. Las levaduras pueden formar gas y etanol. Este modelo agrega la comunidad y no cuantifica cada población.'],
+      ['Lactosa como sustrato', 'La lactosa es un disacárido. Su aprovechamiento depende de las capacidades metabólicas presentes. Una disminución no significa ausencia total.'],
+      ['Una escala logarítmica', 'El pH expresa actividad de iones hidrógeno: una unidad representa un factor diez en esa actividad. No equivale directamente a gramos de ácido; la leche tiene capacidad amortiguadora.'],
+      ['Interpretar sin extrapolar', 'Compara temperatura y tiempo manteniendo otras condiciones. Un pH menor no demuestra seguridad ni beneficios clínicos.']],
+    cheese: [
+      ['Proteínas organizadas', 'Las micelas reúnen caseínas y minerales en una dispersión. No son células ni gotas de grasa.'],
+      ['La superficie importa', 'La κ-caseína participa en la estabilización de las micelas. Modificarla cambia su tendencia a agregarse.'],
+      ['Acción de una enzima', 'La quimosina hidroliza un enlace específico de la κ-caseína. La enzima no consume azúcar para obtener energía.'],
+      ['De agregados a red', 'Después de la etapa enzimática puede formarse una red proteica. Temperatura, pH y calcio afectan el proceso. El índice de firmeza mostrado es relativo.'],
+      ['Fenómenos distintos', 'Floculación, firmeza y sinéresis describen aspectos diferentes. La coagulación enzimática por sí misma no es fermentación.']],
+    instruments: [
+      ['Elegir la propiedad', 'El pH-metro responde a una señal electroquímica relacionada con actividad de hidrógeno. El refractómetro responde a refracción.'],
+      ['Referencias conocidas', 'Calibrar relaciona la señal del equipo con patrones conocidos. No elimina toda fuente de error o interferencia.'],
+      ['Esperar estabilización', 'Una señal instrumental necesita estabilizarse. Una lectura cambiante debe interpretarse antes de anotarse.'],
+      ['Repetibilidad e incertidumbre', 'Repetir lecturas permite explorar dispersión. Resultados próximos entre sí no garantizan exactitud frente al valor de referencia.'],
+      ['La mezcla cambia la interpretación', 'El etanol afecta la refracción. °Brix aparente después de fermentar no equivale directamente al azúcar residual.']]
+  };
+  const originalRender = render;
+  render = function() {
+    originalRender();
+    const navigation = document.createElement('div');
+    navigation.className='stage-navigation';
+    navigation.innerHTML=['Observar','Comprender','Predecir','Experimentar','Explicar'].map((name,i)=>`<button data-stage="${i}">${i+1}. ${name}</button>`).join('');
+    panel.prepend(navigation);
+    const section=document.createElement('section');
+    section.className='theory-capsules';
+    section.innerHTML='<h4>Comprender: cinco conexiones esenciales</h4>'+theory[current].map(([name,text],i)=>`<details><summary>${i+1}. ${name}</summary><div class="capsule-image"><img src="assets/subtopic-${current}-${i}.webp" loading="lazy" alt="Ilustración específica: ${name}" width="1200" height="800"></div><p>${text}</p><button data-capsule="${i%3}">Explorar esta parte en la ilustración ↑</button></details>`).join('')+`<details><summary>Glosario en contexto</summary><p><strong>Sustrato:</strong> molécula que participa en una reacción. <strong>Enzima:</strong> catalizador biológico. <strong>Biomasa:</strong> materia de los organismos. <strong>pH:</strong> escala relacionada con actividad de hidrógeno. <strong>Micela:</strong> conjunto organizado de caseínas y minerales. <strong>Repetibilidad:</strong> proximidad de lecturas bajo condiciones similares.</p></details>`;
+    panel.querySelector('.module-top').after(section);
+    navigation.onclick=e=>{const b=e.target.closest('[data-stage]');if(!b)return;const targets=[panel.querySelector('.module-top'),section,panel.querySelector('.activity-grid'),panel.querySelector('.experiment'),panel.querySelector('.explain')];const target=targets[+b.dataset.stage];if(target.tagName==='DETAILS')target.open=true;target.scrollIntoView({block:'start',behavior:'smooth'});};
+    section.onclick=e=>{const b=e.target.closest('[data-capsule]');if(b){panel.querySelector(`[data-hotspot="${b.dataset.capsule}"]`).click();panel.querySelector('.module-top').scrollIntoView({block:'start'});}};
+  };
   render();
 })();

@@ -27,7 +27,9 @@ const results=[];
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
       assert.equal(await page.locator('.footer').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(25, 88, 85)');
       assert.equal(await page.locator('.footer').evaluate(e=>getComputedStyle(e).color),'rgb(255, 255, 255)');
-      assert.equal(await page.locator('img').evaluateAll(es=>es.every(e=>e.complete&&e.naturalWidth>0)),true);
+      await page.locator('img').evaluateAll(es=>Promise.all(es.map(e=>{e.loading='eager';return e.decode();})));
+      await page.locator('img').evaluateAll(es=>Promise.all(es.map(e=>{e.loading='eager';return e.decode();})));
+    assert.equal(await page.locator('img').evaluateAll(es=>es.every(e=>e.complete&&e.naturalWidth>0)),true);
       await page.screenshot({path:path.join(artifacts,`desktop-${width}.png`),fullPage:true});
       if(width<760) {
         await page.locator('#mobileMenuBtn').click();
@@ -145,6 +147,7 @@ const results=[];
     await page.keyboard.press('Escape');
     await context.setOffline(true);
     await page.reload();
+    await page.locator('img').evaluateAll(es=>Promise.all(es.map(e=>{e.loading='eager';return e.decode();})));
     assert.equal(await page.locator('img').evaluateAll(es=>es.every(e=>e.complete&&e.naturalWidth>0)),true);
     await page.locator('[data-sim="lactic"]').first().click();
     await page.locator('#speed').selectOption('4');

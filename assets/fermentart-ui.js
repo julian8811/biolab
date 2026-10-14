@@ -37,6 +37,7 @@
     }
   };
   let state, timer, returnFocus;
+  const sessions = {};
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const $ = id => document.getElementById(id);
   const fmt = number => number === null ? '—' : Number(number).toLocaleString('es-CO',{maximumFractionDigits:2});
@@ -48,7 +49,7 @@
   }
   function open(kind,trigger) {
     if(!config[kind])return;
-    stop(); returnFocus=trigger;
+    stop(); if(state) sessions[state.kind]={...state,html:body.innerHTML}; returnFocus=trigger;
     const c=config[kind];
     const params=Object.fromEntries(c.fields.map(([,key,value])=>[key,value]));
     c.toggles.forEach(([key,,value])=>params[key]=value);
@@ -82,6 +83,10 @@
     }
     state.data=c.run(params);
     dialog.showModal(); document.body.style.overflow='hidden'; draw();
+    const sampleButton=document.createElement('button');sampleButton.textContent='Tomar muestra virtual';sampleButton.className='button';
+    const log=document.createElement('div');log.setAttribute('role','status');
+    $('simStatus').before(sampleButton,log);
+    const samples=[];sampleButton.onclick=()=>{const point=c.duration?at(state.data,state.time):state.data;samples.push({time:state.time,params:{...state.params},result:{...point}});log.textContent='Bitácora: '+samples.map((s,i)=>'Muestra '+(i+1)+' a '+s.time+' '+(c.unit||'')+' · '+JSON.stringify(s.result)).join(' | ');};
     $('closeDrawer').focus();
   }
   function updateParams() {
